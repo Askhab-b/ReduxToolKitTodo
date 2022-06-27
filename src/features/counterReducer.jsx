@@ -1,22 +1,23 @@
 import {createAction, createReducer } from "@reduxjs/toolkit";
 
 
-const initialState = {
-counter: 0
 
+export const add = createAction('ADD_TODO')
+export const remove = createAction('REMOVE_TODO')
+
+const initialState = {
+todos: []
 }
 
-export const inc = createAction('inc')
-export const dec = createAction('dec')
 
-
-const counterReducer = createReducer(initialState, (builder) => {
-builder.addCase(inc, (state) => {
-state.counter += 1;
+const todoReducer = createReducer(initialState, (builder) => {
+builder
+.addCase(add, (state, action) => {
+state.todos.push(action.payload)
 })
-builder.addCase(dec, (state) => {
-state.counter -= 1;  
+.addCase(remove, (state, action) => {
+state.todos = state.todos.filter((todo, i) => i !== action.payload)
 })
 });
 
-export default counterReducer
+export default todoReducer
